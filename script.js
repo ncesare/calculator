@@ -71,16 +71,16 @@ function calculate(calculation) {
     let num2 = Number.parseFloat(display.textContent)
     console.log(num1, operator, num2)
     if (operator === "+") {
-        display.textContent = num1 + num2;
+        display.textContent = (num1 + num2).toPrecision(10);
     }
     else if (operator === "-") {
-        display.textContent = num1 - num2;
+        display.textContent = (num1 - num2).toPrecision(10);
     }
     else if (operator === "*") {
-        display.textContent = num1 * num2;
+        display.textContent = (num1 * num2).toPrecision(10);
     }
     else if (operator === "/") {
-        display.textContent = num1 / num2;
+        display.textContent = (num1 / num2).toPrecision(10);
     }
     return [];
 }
