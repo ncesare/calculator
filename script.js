@@ -25,7 +25,7 @@ for (operator of operators) {
     operator.addEventListener('click', (e) => calculation = operation(e));
 }
 
-equalsOperator.addEventListener('click', () => calculate(calculation));
+equalsOperator.addEventListener('click', () => calculation = calculate(calculation));
 
 const decimal = document.querySelector('#decimal');
 const zero = document.querySelector('#zero');
@@ -82,6 +82,7 @@ function calculate(calculation) {
     else if (operator === "/") {
         display.textContent = num1 / num2;
     }
+    return [];
 }
 
 // Still needs functionality: pressing an operator twice in a row (e.g. 2 + 2 + ...) performs the operation and stores that value as num1.
