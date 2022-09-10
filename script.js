@@ -43,8 +43,15 @@ const numbers = [zero, one, two, three, four, five, six, seven, eight, nine, dec
 
 for (number of numbers) {
     number.addEventListener('click', (e) => {
+        // Catch errors that would cause invalid or too-long numbers to appear
         if (e.target.value === '.' && display.textContent.includes('.'))
             return;
+
+        if (display.textContent.length >= 11) {
+            console.log('Display full');
+            return;
+        }
+
         if (display.textContent == 0) {
             display.textContent = e.target.value;
         } else {
@@ -52,6 +59,8 @@ for (number of numbers) {
         }
     });
 }display.textContent = display.textContent + e.target.value
+
+// Bind the user's entered number and chosen operation
 
 function operation(e) {
     if (calculation.length > 0) {
@@ -64,6 +73,8 @@ function operation(e) {
     console.log(operator);
     return [num1, operator];
 }
+
+// Finish the calculation
 
 function calculate(calculation) {
     let num1 = calculation[0]
@@ -84,6 +95,3 @@ function calculate(calculation) {
     }
     return [];
 }
-
-// Still needs functionality: pressing an operator twice in a row (e.g. 2 + 2 + ...) performs the operation and stores that value as num1.
-// Still needs % and +/1 operations.
