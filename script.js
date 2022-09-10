@@ -58,7 +58,7 @@ for (number of numbers) {
             display.textContent = display.textContent + e.target.value;
         }
     });
-}display.textContent = display.textContent + e.target.value
+}
 
 // Bind the user's entered number and chosen operation
 
@@ -77,21 +77,32 @@ function operation(e) {
 // Finish the calculation
 
 function calculate(calculation) {
+    // Catch an error where the user tries to run a calculation without entering an operator
+    if (calculation.length === 0) {
+        return;
+    }
+
     let num1 = calculation[0]
     let operator = calculation[1]
     let num2 = Number.parseFloat(display.textContent)
+    let result;
     console.log(num1, operator, num2)
     if (operator === "+") {
-        display.textContent = (num1 + num2).toPrecision(10);
+        result = (num1 + num2).toPrecision(10);
     }
     else if (operator === "-") {
-        display.textContent = (num1 - num2).toPrecision(10);
+        result = (num1 - num2).toPrecision(10);
     }
     else if (operator === "*") {
-        display.textContent = (num1 * num2).toPrecision(10);
+        result = (num1 * num2).toPrecision(10);
     }
     else if (operator === "/") {
-        display.textContent = (num1 / num2).toPrecision(10);
+        result = (num1 / num2).toPrecision(10);
     }
+
+    // Display the result with unecessary zeros chopped off.
+    display.textContent = parseFloat(result);
+
+    // Return an empty set of numbers and operators so pressing = again won't repeat calculation
     return [];
 }
