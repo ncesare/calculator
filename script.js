@@ -67,3 +67,6 @@ function calculate(calculation) {
     }
     
 }
+
+// Still needs functionality: pressing an operator twice in a row (e.g. 2 + 2 + ...) performs the operation and stores that value as num1.
+// Still needs % and +/1 operations.
