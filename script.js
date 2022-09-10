@@ -1,7 +1,12 @@
 const display = document.querySelector('#display-box');
 
+let calculation = [];
+
 const allClear = document.querySelector('#all-clear');
-allClear.addEventListener('click', () => display.textContent = '');
+allClear.addEventListener('click', () => {
+    display.textContent = '0';
+    calculation = [];
+    });
 
 const negativeOperator = document.querySelector('#negative-op');
 const percentOperator = document.querySelector('#percent-op');
@@ -11,9 +16,10 @@ const plusOperator = document.querySelector('#plus-op');
 const minusOperator = document.querySelector('#minus-op');
 const equalsOperator = document.querySelector('#equals-op');
 
-const operators = [negativeOperator, percentOperator, divOperator, multOperator, plusOperator, minusOperator]
+negativeOperator.addEventListener('click', () => display.textContent = '-' + display.textContent);
+percentOperator.addEventListener('click', () => display.textContent = parseFloat(display.textContent)/100)
 
-let calculation;
+const operators = [divOperator, multOperator, plusOperator, minusOperator]
 
 for (operator of operators) {
     operator.addEventListener('click', (e) => calculation = operation(e));
@@ -36,16 +42,27 @@ const nine = document.querySelector('#nine');
 const numbers = [zero, one, two, three, four, five, six, seven, eight, nine, decimal];
 
 for (number of numbers) {
-    number.addEventListener('click', (e) => display.textContent = display.textContent + e.target.value);
-}
+    number.addEventListener('click', (e) => {
+        if (e.target.value === '.' && display.textContent.includes('.'))
+            return;
+        if (display.textContent == 0) {
+            display.textContent = e.target.value;
+        } else {
+            display.textContent = display.textContent + e.target.value;
+        }
+    });
+}display.textContent = display.textContent + e.target.value
 
 function operation(e) {
+    if (calculation.length > 0) {
+        calculate(calculation);
+    }
     let num1 = Number.parseFloat(display.textContent);
-    display.textContent = '';
+    display.textContent = 0;
     console.log(num1);
     let operator = e.target.value;
     console.log(operator);
-    return [num1, operator]
+    return [num1, operator];
 }
 
 function calculate(calculation) {
@@ -65,7 +82,6 @@ function calculate(calculation) {
     else if (operator === "/") {
         display.textContent = num1 / num2;
     }
-    
 }
 
 // Still needs functionality: pressing an operator twice in a row (e.g. 2 + 2 + ...) performs the operation and stores that value as num1.
