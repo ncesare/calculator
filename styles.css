@@ -28,14 +28,16 @@ button {
 
 #display-box {
     width: 99%;
-    height: 2em;
+    height: max-content;
+    min-height: 64px;
     border: 0;
     border-radius: 5px;
-    font-size: 2em;
+    font-size: 42pt;
     font-weight: bold;
     text-align: right;
     background-color: rgb(216, 216, 216);
     margin: 2px auto;
+    padding: 2px;
 }
 
 #zero {
