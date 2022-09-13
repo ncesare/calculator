@@ -69,7 +69,7 @@ function operation(e) {
     }
     let num1 = Number.parseFloat(display.textContent);
     if (expression.length < 1) {
-        display.textContent = 0;
+        clearSlate = true;
     }
     console.log(num1);
     let operator = e.target.value;
