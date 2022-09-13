@@ -1,11 +1,13 @@
 const display = document.querySelector('#display-box');
 
-let calculation = [];
+let expression = [];
+
+let clearSlate = true;
 
 const allClear = document.querySelector('#all-clear');
 allClear.addEventListener('click', () => {
     display.textContent = '0';
-    calculation = [];
+    expression = [];
     });
 
 const negativeOperator = document.querySelector('#negative-op');
@@ -16,32 +18,26 @@ const plusOperator = document.querySelector('#plus-op');
 const minusOperator = document.querySelector('#minus-op');
 const equalsOperator = document.querySelector('#equals-op');
 
-negativeOperator.addEventListener('click', () => display.textContent = '-' + display.textContent);
+negativeOperator.addEventListener('click', () => {
+    if (display.textContent.includes('-')) {
+        display.textContent = Math.abs(Number(display.textContent));
+    } else {
+        display.textContent = '-' + display.textContent;
+    }})
+
 percentOperator.addEventListener('click', () => display.textContent = parseFloat(display.textContent)/100)
 
 const operators = [divOperator, multOperator, plusOperator, minusOperator]
 
 for (operator of operators) {
-    operator.addEventListener('click', (e) => calculation = operation(e));
+    operator.addEventListener('click', (e) => expression = operation(e));
 }
 
-equalsOperator.addEventListener('click', () => calculation = calculate(calculation));
+equalsOperator.addEventListener('click', () => expression = calculate(expression));
 
-const decimal = document.querySelector('#decimal');
-const zero = document.querySelector('#zero');
-const one = document.querySelector('#one');
-const two = document.querySelector('#two');
-const three = document.querySelector('#three');
-const four = document.querySelector('#four');
-const five = document.querySelector('#five');
-const six = document.querySelector('#six');
-const seven = document.querySelector('#seven');
-const eight = document.querySelector('#eight');
-const nine = document.querySelector('#nine');
+const numbers = document.querySelectorAll('.number');
 
-const numbers = [zero, one, two, three, four, five, six, seven, eight, nine, decimal];
-
-for (number of numbers) {
+numbers.forEach(number => {
     number.addEventListener('click', (e) => {
         // Catch errors that would cause invalid or too-long numbers to appear
         if (e.target.value === '.' && display.textContent.includes('.'))
@@ -52,22 +48,29 @@ for (number of numbers) {
             return;
         }
 
-        if (display.textContent == 0) {
+        if (display.textContent != 0 && expression.length == 0) {
+            clearSlate = false;
+        }
+
+        if (clearSlate) {
             display.textContent = e.target.value;
         } else {
             display.textContent = display.textContent + e.target.value;
         }
     });
-}
+})
 
 // Bind the user's entered number and chosen operation
 
 function operation(e) {
-    if (calculation.length > 0) {
-        calculate(calculation);
+    if (expression.length > 0) {
+        calculate(expression);
+        clearSlate = true;
     }
     let num1 = Number.parseFloat(display.textContent);
-    display.textContent = 0;
+    if (expression.length < 1) {
+        display.textContent = 0;
+    }
     console.log(num1);
     let operator = e.target.value;
     console.log(operator);
@@ -76,14 +79,14 @@ function operation(e) {
 
 // Finish the calculation
 
-function calculate(calculation) {
+function calculate(expression) {
     // Catch an error where the user tries to run a calculation without entering an operator
-    if (calculation.length === 0) {
+    if (expression.length === 0) {
         return;
     }
 
-    let num1 = calculation[0]
-    let operator = calculation[1]
+    let num1 = expression[0]
+    let operator = expression[1]
     let num2 = Number.parseFloat(display.textContent)
     let result;
     console.log(num1, operator, num2)
