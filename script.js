@@ -1,8 +1,10 @@
-const displayBox = document.querySelector('#display-box')
+const displayBox = document.querySelector('#display-box');
+const expressionDisplay = document.querySelector('#expression-display');
 
 let clearSlate = true;
 
 let expression = [];
+let operator;
 
 const buttons = document.querySelectorAll('button');
 
@@ -13,46 +15,69 @@ buttons.forEach(button => button.addEventListener('click', () => {
 
 function appendNumber(digit) { //Appends a number to the display
     if (clearSlate) {
-        displayBox.textContent = digit;
+        displayBox.value = digit;
         clearSlate = false;
-    } else displayBox.textContent += digit;
+    } else displayBox.value += digit;
 }
 
 function operationSwitch(value) {
     switch(value) {
         case 'clear':
-            displayBox.textContent = 0;
-            clearSlate = true;
+            expressionDisplay.textContent = '';
+            displayBox.value = 0;
             expression = [];
+            operator = null;
+            clearSlate = true;
             break;
         case '+':
         case '-':
         case '*':
         case '/':
-            expression.push(Number(displayBox.textContent), value);
-            console.log(expression);
-            clearSlate = true;
+            if (operator) {
+                expression[1] = Number(displayBox.value);
+                evaluateExpression();
+                operator = value;
+            } else {
+                expressionDisplay.textContent += `${displayBox.value} ${value} `;
+                expression.push(Number(displayBox.value));
+                operator = value;
+                clearSlate = true;
+            }
             break;
-        case 'negative':
-            if (displayBox.textContent.includes('-')) displayBox.textContent = Math.abs(displayBox.textContent);
-            else displayBox.textContent = '-' + displayBox.textContent;
+        case '+/-':
+            if (displayBox.value.includes('-')) displayBox.value = Math.abs(displayBox.value);
+            else displayBox.value = '-' + displayBox.value;
             break;
         case '%':
-            displayBox.textContent = Number(displayBox.textContent) / 100;
+            displayBox.value = Number(displayBox.value) / 100;
             break;
         case '.':
-            (!displayBox.textContent.includes('.')) ? displayBox.textContent += '.': null;
+            (!displayBox.value.includes('.')) ? displayBox.value += '.': null;
             break;
         case '=':
+            if (expression.length == 1) expression.push(Number(displayBox.value));
+            else expression[1] = Number(displayBox.value);
             evaluateExpression();
             break;
     }
 }
 
 function evaluateExpression() {
-    expression.push(Number(displayBox.textContent));
-    switch(expression[1]) {
+    expressionDisplay.textContent += `${displayBox.value} = `
+    switch(operator) {
         case '+':
-            displayBox.textContent = expression[0] + expression[2];
+            displayBox.value = expression[0] + expression[1];
+            break;
+        case '-':
+            displayBox.value = expression[0] - expression[1];
+            break;
+        case '*':
+            displayBox.value = expression[0] * expression[1];
+            break;
+        case '/':
+            displayBox.value = expression[0] / expression[1];
+            break;
     }
+    expression[0] = Number(displayBox.value);
+    clearSlate = true;
 }
