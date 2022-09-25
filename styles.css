@@ -1,7 +1,7 @@
 .calculator {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 70px 70px repeat(5, 1fr);
+    grid-template-rows: 70px repeat(5, 1fr);
     gap: 2px;
     width: max-content;
     height: max-content;
@@ -29,15 +29,7 @@ button:hover {
     background-color: rgb(204, 204, 204);
 }
 
-#expression-display {
-    color: white;
-    grid-column: 1 / 5;
-    padding: 12px;
-    text-align: center;
-}
-
 #display-box {
-    grid-row: 2 / 3;
     grid-column: 1 / 5;
     width: 25.125rem;
     height: max-content;

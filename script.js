@@ -1,5 +1,4 @@
 const displayBox = document.querySelector('#display-box');
-const expressionDisplay = document.querySelector('#expression-display');
 
 let clearSlate = true;
 
@@ -23,7 +22,6 @@ function appendNumber(digit) { //Appends a number to the display
 function operationSwitch(value) {
     switch(value) {
         case 'clear':
-            expressionDisplay.textContent = '';
             displayBox.value = 0;
             expression = [];
             operator = null;
@@ -38,7 +36,6 @@ function operationSwitch(value) {
                 evaluateExpression();
                 operator = value;
             } else {
-                expressionDisplay.textContent += `${displayBox.value} ${value} `;
                 expression.push(Number(displayBox.value));
                 operator = value;
                 clearSlate = true;
@@ -63,7 +60,6 @@ function operationSwitch(value) {
 }
 
 function evaluateExpression() {
-    expressionDisplay.textContent += `${displayBox.value} = `
     switch(operator) {
         case '+':
             displayBox.value = expression[0] + expression[1];
