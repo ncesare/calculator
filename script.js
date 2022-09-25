@@ -49,11 +49,10 @@ function operationSwitch(value) {
             displayBox.value = Number(displayBox.value) / 100;
             break;
         case '.':
-            (!displayBox.value.includes('.')) ? displayBox.value += '.': null;
+            if (!displayBox.value.includes('.')) displayBox.value += '.';
             break;
         case '=':
-            if (expression.length == 1) expression.push(Number(displayBox.value));
-            else expression[1] = Number(displayBox.value);
+            expression[1] = Number(displayBox.value);
             evaluateExpression();
             break;
     }
