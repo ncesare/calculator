@@ -31,15 +31,14 @@ function operationSwitch(value) {
         case '-':
         case '*':
         case '/':
-            if (operator) {
+            if (expression.length > 0) {
                 expression[1] = Number(displayBox.value);
                 evaluateExpression();
-                operator = value;
             } else {
-                expression.push(Number(displayBox.value));
-                operator = value;
+                expression[0] = (Number(displayBox.value));
                 clearSlate = true;
             }
+            operator = value;
             break;
         case '+/-':
             if (displayBox.value.includes('-')) displayBox.value = Math.abs(displayBox.value);
